@@ -1,8 +1,7 @@
-// src/screens/LoginScreen.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import api from '../services/api';
-import { saveToken } from '../services/auth';
+import { saveToken, saveUsername } from '../services/auth';
 
 export default function LoginScreen({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
@@ -11,13 +10,14 @@ export default function LoginScreen({ onLoginSuccess }) {
   async function handleLogin() {
     try {
       const response = await api.post('/api/auth/login', {username, password});
-      const { token } = response.data;
+      const { token, username: loggedInUsername } = response.data;
       await saveToken(token);
-      // Po pomyślnym zalogowaniu wywołaj onLoginSuccess, co spowoduje, że w App.js isLoggedIn się zmieni na true
+      await saveUsername(loggedInUsername); // Zapisz nazwę użytkownika
+      console.log('Zalogowano użytkownika:', loggedInUsername);
       onLoginSuccess();
     } catch (error) {
-      console.log('Login error', error);
-      // Możesz wyświetlić komunikat o błędzie
+      console.error('Login error', error);
+      Alert.alert('Błąd', 'Nieprawidłowa nazwa użytkownika lub hasło.');
     }
   }
 
