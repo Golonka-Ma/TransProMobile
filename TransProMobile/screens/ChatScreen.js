@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, FlatList, StyleSheet, KeyboardAvoidingView, Platform, Alert } from 'react-native';
-import { TextInput, Button, Text, Avatar, Card } from 'react-native-paper';
+import { TextInput, IconButton, Avatar, Card, Text } from 'react-native-paper';
 import api from '../services/api';
 import SockJS from 'sockjs-client';
 import { Client as StompClient } from '@stomp/stompjs';
@@ -77,10 +77,6 @@ export default function ChatScreen({ route }) {
         destination: '/app/private-message',
         body: JSON.stringify(chatMessage),
       });
-      setMessages((prev) => [
-        ...prev,
-        { ...chatMessage, sender: { username: currentUsername }, receiver: { username } },
-      ]);
       setMessageContent('');
     } catch (error) {
       Alert.alert('Error', 'Failed to send message.');
@@ -124,33 +120,55 @@ export default function ChatScreen({ route }) {
       <View style={styles.inputRow}>
         <TextInput
           mode="outlined"
-          placeholder="Enter a message..."
+          placeholder="Type a message..."
           value={messageContent}
           onChangeText={setMessageContent}
-          style={styles.input}
+          style={styles.inputxx}
+          outlineColor="#555"
+          activeOutlineColor="#1D4B3D"
         />
-        <Button mode="contained" onPress={sendMessage} style={styles.button}>
-          Send
-        </Button>
+        <IconButton
+          icon="send"
+          size={28}
+          onPress={sendMessage}
+          style={styles.sendButton}
+          iconColor="white"
+        />
       </View>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1, backgroundColor: '#2E2E2E' },
   messageArea: { padding: 10 },
   messageContainer: { flexDirection: 'row', marginVertical: 5, alignItems: 'flex-end' },
   me: { justifyContent: 'flex-end' },
   other: { justifyContent: 'flex-start' },
-  messageBubble: { padding: 10, borderRadius: 10, maxWidth: '70%' },
-  bubbleMe: { backgroundColor: '#3b82f6' },
-  bubbleOther: { backgroundColor: '#e5e7eb' },
+  messageBubble: { padding: 10, borderRadius: 15, maxWidth: '70%' },
+  bubbleMe: { backgroundColor: '#1D4B3D' },
+  bubbleOther: { backgroundColor: '#404040' },
   textMe: { color: '#fff' },
-  textOther: { color: '#111827' },
-  avatarMe: { backgroundColor: '#3b82f6', marginLeft: 10 },
-  avatarOther: { backgroundColor: '#e5e7eb', marginRight: 10 },
-  inputRow: { flexDirection: 'row', alignItems: 'center', padding: 10, borderTopWidth: 1, borderTopColor: '#ccc' },
-  input: { flex: 1, marginRight: 10 },
-  button: { paddingHorizontal: 10 },
+  textOther: { color: '#FFFFFF' },
+  avatarMe: { backgroundColor: '#1D4B3D', marginLeft: 10 },
+  avatarOther: { backgroundColor: '#404040', marginRight: 10 },
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#1E1E1E',
+    borderTopWidth: 1,
+    borderTopColor: '#333',
+  },
+  inputxx: {
+    flex: 1,
+    borderRadius: 40,
+    backgroundColor: '#404040',
+    color: '#FFFFFF',
+    marginRight: 10,
+  },
+  sendButton: {
+    backgroundColor: '#1D4B3D',
+    borderRadius: 25,
+  },
 });

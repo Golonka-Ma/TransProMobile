@@ -5,7 +5,6 @@ import { Text, Button } from 'react-native-paper';
 
 export default function HomeScreen({ onLogout }) {
   const handlePressLogout = () => {
-    console.log('Przycisk wyloguj został naciśnięty.');
     onLogout();
   };
 
@@ -20,7 +19,7 @@ export default function HomeScreen({ onLogout }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' },
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2E2E2E'},
   text: { fontSize: 20, marginBottom: 20 },
   button: { marginTop: 10 },
 });

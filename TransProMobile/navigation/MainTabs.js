@@ -1,4 +1,3 @@
-// src/navigation/MainTabs.js
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
@@ -22,12 +21,21 @@ export default function MainTabs({ onLogout }) {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: '#1E1E1E', // Dark background for the tab bar
+          borderTopColor: '#333', // Subtle border color
+        },
+        tabBarActiveTintColor: '#007ACC', // Active tab color
+        tabBarInactiveTintColor: '#888', // Inactive tab color
+        headerShown: false, // Hide headers for tabs
       })}
     >
+      {/* Home Screen Tab */}
       <Tab.Screen name="Home">
         {props => <HomeScreen {...props} onLogout={onLogout} />}
       </Tab.Screen>
+      
+      {/* Messages Tab */}
       <Tab.Screen name="Messages" component={MessagesStack} />
     </Tab.Navigator>
   );
